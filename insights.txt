@@ -1,0 +1,10 @@
+Insights:
+
+Gender did not have a significant impaact on spending score, so it was removed from the scatter plot
+Elderly customers had a lower spending score whereas younger ecsepcially in 20s range had variability
+Higher income customers had a higher spending score but also outliers such as lower income but with lower spending score
+potential clusters:
+High income, low spending
+
+Medium income, high spending
+and even outliers such as low income, high spending
