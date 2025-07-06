@@ -1,10 +1,171 @@
 Insights:
 
-Gender did not have a significant impaact on spending score, so it was removed from the scatter plot
-Elderly customers had a lower spending score whereas younger ecsepcially in 20s range had variability
-Higher income customers had a higher spending score but also outliers such as lower income but with lower spending score
-potential clusters:
-High income, low spending
+Age vs Visit Frequency showed no real relationship, so no segmentation or clustering was done to provide strategic best action
+Methodology Used
+We applied KMeans clustering to identify customer segments based on behavioral and demographic features. To determine the optimal number of clusters, we used the elbow method via the plot_elbow function. This method relies on analyzing the Within-Cluster Sum of Squares (WCSS), which decreases as more clusters are added. The optimal point was chosen where the WCSS curve begins to flatten, indicating diminishing returns in clustering performance.
 
-Medium income, high spending
-and even outliers such as low income, high spending
+To prepare the data for clustering, we sliced the original dataframe to isolate relevant feature pairs — such as Age vs Spending Score and Visit Frequency vs Spending Score. Each subset was scaled using a standard scaler to normalize feature ranges before running KMeans, as clustering is sensitive to magnitude differences.
+
+After clustering, we assigned the cluster number to a new column in each respective dataframe, allowing us to analyze customer behavior within each segment. We then applied descriptive labels to each cluster (e.g., "Moderate Spenders", "High Frequency Visitors") to aid interpretation and communication of findings.
+
+We used Matplotlib and Seaborn to generate visualizations that helped illustrate cluster separation and distribution. These included:
+
+Scatter plots to show how clusters differ by feature pair.
+
+Elbow plots to determine the optimal number of clusters.
+
+Pie charts or bar plots to display the relative size of each segment.
+Before applying KMeans, these subsets(Age vs Spending Score and Spending Score vs Visit Frequency) were scaled using standard normalization, transforming the features into a standard normal distribution (mean = 0, standard deviation = 1). This ensures that all features contribute equally during clustering.
+
+These visuals, along with centroid statistics, guided our final insights and actionable strategies for each customer group.
+
+Based of off plot_elbow and the cluster distribution from plot_cluster, the amount of clusters to choose from was 3(0,1,2)
+Values taken from the plot_avg function which shows the average age and spending score per cluster. Categories were also assigned based on the calc_mean_spending function and an age threshold of 40 to segment customers accordingly
+First cluster Age vs Spending Score(Averages)
+Cluster  Age                      Spending Score
+0        54.039474               36.184211
+1        30.292308               79.815385
+2        28.711864               35.627119
+ Category                  Approx. % of Total Customers 
+
+   Younger, High Spenders  38.5%                  
+    Older, Low Spenders     32.0%                  
+    Older, High Spenders    10.0%               
+    Younger, Low Spenders   10.0%                  
+Based off of show_pie_chart
+1. Young High Spenders Are the Majority (38.5%)
+The largest segment identified is Young High Spenders, with an average age of 28.9 years and an average spending score of 75.36. Their strong presence in the customer base and high engagement with spending behavior make them a priority segment for targeted marketing.
+ Actionable Strategy: Focus on premium products, early-access offers, or digital campaigns (e.g., influencer marketing, exclusive promotions) tailored to younger audiences.
+
+2. Older High Spenders and Younger Low Spenders Are Least Represented (10.0% Each)
+The two smallest segments are:
+
+Older High Spenders: Likely loyal, high-value customers who could benefit from VIP treatment, personalized rewards, or membership programs.
+
+Younger Low Spenders: Possibly price-sensitive or infrequent buyers. They may be responsive to flash sales, bundling, or gamified reward programs.
+
+ Actionable Strategy:
+
+For older high spenders: Introduce loyalty tiers or curated recommendations.
+
+For younger low spenders: Focus on engagement tactics and entry-level value offers.
+
+3. Clusters Are Visibly Well Separated
+The 2D scatter plot of Age vs Spending Score shows clear visual boundaries between the clusters and also shows the centroids of each cluster to provide a holistic view. This indicates that spending behavior and age are strong differentiators in this dataset, especially among younger customers.
+ Interpretation: The model’s clustering is both meaningful and robust for segmentation purposes.
+
+Next Segment
+
+Using the KMeans clustering algorithm, we determined the optimal number of clusters (k = 6) via the elbow method. The optimal_k function showed a clear inflection point at k = 6, where the Within-Cluster Sum of Squares (WCSS) began to level off, indicating diminishing returns with additional clusters.
+
+After clustering, we analyzed the centroids of each cluster to assign behavioral labels. However, rather than limiting interpretation to just 6 clusters, we further refined the segments based on a combined logic of visit frequency and spending score, which resulted in 9 customer categories. 
+The give_label function is what gave a combination of the behavioral labels based on each customer's spending score and visit frequency against the values from the  avg_visit_freq and avg_spend_score functions.
+
+This post-clustering categorization allowed for a more descriptive and business-relevant segmentation than raw cluster IDs alone.
+Spending Score vs Visit Frequency
+Distribution of the Categories of Customers taken from the show_pie_chart function
+
+ Category                              % of Customers 
+
+ High Spender, Frequent Visitor        13.0%      
+ Moderate Spender, Moderate Visitor    12.5%     
+ High Spender, Infrequent Visitor      12.0%      
+ Low Spender, Moderate Visitor         11.5%      
+ Moderate Spender, Frequent Visitor    11.0%     
+ Low Spender, Infrequent Visitor       10.0%     
+ Low Spender, Frequent Visitor         10.0%     
+ Moderate Spender, Infrequent Visitor  10.0%     
+ High Spender, Moderate Visitor        10.0%     
+
+
+Cluster Summary for average spending score vs Visit Frequency
+                        Spending Score (1-100)  Visit Frequency (found from the plot_avg function)
+Clusters
+0                      37.457143         8.628571
+1                      12.030303        46.818182
+2                      77.241379        13.068966
+3                      48.342857        40.542857
+4                      83.088235        59.823529
+5                      46.323529        70.411765
+
+Both were calculated by the avg_visit_freq and avg_spend_score functions
+ Visit Frequency Threshold: 40.365
+ Spending Score Threshold: 50.2
+ These values are then used to assign labels such as Low Spender, Frequent Visitor etc for each customer's spending score and visit frequency for comparison
+ nsights: Visit Frequency vs Spending Score
+1. High Spender, Frequent Visitor (13.0%) – Your Power Segment
+These customers visit often and spend the most. Though only 13%, their high engagement makes them your most valuable segment.
+
+ Actionable Strategy:
+
+Launch VIP loyalty programs or subscription tiers
+
+Offer early access to product launches or exclusive deals
+
+Keep them engaged with personalized experiences
+
+Potentially utilize AI powered engine to provide recommended products or personalized emails
+
+2. Moderate Spend, Moderate/High Frequency (12.5% + 11.0%) – Growth Opportunity
+Together, moderate spenders who visit moderately or frequently form over 23% of the base. They’re consistent, but not yet high spenders.
+
+ Actionable Strategy:
+
+Introduce upselling via personalized recommendations
+
+Use email campaigns to highlight higher-value items
+
+Provide “level up” incentives (e.g., spend $10 more for a reward)
+
+3. High Spender, Infrequent Visitor (12.0%) – Valuable But Not Engaged
+These are high spenders, but they don’t shop often. Unlocking more visits could greatly increase revenue.
+
+ Actionable Strategy:
+
+Send time-sensitive deals, re-engagement emails, or reminders
+
+Create FOMO-based campaigns (e.g., “You’re missing out!”)
+
+Offer incentives for multiple visits per month
+
+4. Low Spender, Frequent or Moderate Visitors (10.0% + 11.5%) Low Revenue, High Potential
+This group visits regularly but spends less — suggesting missed opportunity or price sensitivity.
+
+ Actionable Strategy:
+
+Use bundles or volume discounts to increase basket size to get the most value out of deals
+
+Promote limited-time upsells or “Spend X, Save Y” campaigns
+
+Consider UI/UX or product mix optimizations
+
+5. Low Spender, Infrequent Visitor (10.0%) Low Priority Segment
+This group is disengaged on both axes. Re-engagement is possible but ROI may be limited.
+
+ Actionable Strategy:
+
+Use broad reactivation campaigns
+
+Offer entry-level incentives or referral bonuses
+
+Minimal investment unless change in behavior is observed
+May have to drill down on AI Engines regarding features such as Right Time optimization to send emails if current workflow doesn't allow
+Perhaps try demos
+
+6. High Spender, Moderate Visitor (10.0%) Reliable Value
+Steady shoppers with good spend habits. Not as frequent as your top-tier, but worth retaining.
+
+ Actionable Strategy:
+
+Offer occasional perks or event invites to reinforce loyalty
+
+Surprise discounts to boost visit frequency
+
+7. Moderate/Low Spender, Infrequent Visitor (10.0%)  Dormant Group
+Hard to activate and low spend potential unless behavior changes.
+
+ Actionable Strategy:
+
+Test A/B re-engagement emails or gamified incentives
+
+Keep them on marketing lists but minimize budget allocation
