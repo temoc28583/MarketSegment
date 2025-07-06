@@ -1,0 +1,14 @@
+# MarketSegment
+Ethics Statement
+Why Gender and Income Were Excluded
+Gender was intentionally removed from clustering and visual analysis. While commonly included in marketing datasets, using gender as a basis for segmentation can reinforce harmful stereotypes and result in biased targeting. Since gender is a protected demographic attribute, its inclusion risks leading to unethical marketing practices and does not meaningfully enhance actionable insights for this project.
+
+Income was also excluded from clustering and analysis. Although income data could improve segmentation accuracy, its use can perpetuate socioeconomic biases and contribute to unfair exclusion or targeting of certain groups. By removing income as a feature, the project aims to promote equity and avoid discriminatory segmentation outcomes.
+
+All features used in this project were selected to prioritize inclusivity, fairness, and transparency, in alignment with ethical data science practices.
+
+Alternative Features Used
+In place of gender and income, this project focused on Visit Frequency, Spending Score, and Age to identify meaningful customer segments. These variables offer behavioral and demographic insight without risking bias from protected or sensitive attributes.
+
+
+
